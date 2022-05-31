@@ -1,8 +1,8 @@
 export const base = {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingLeft: 14,
-    paddingRight: 14,
+    backgroundColor: "#b3b3b3",
+    paddingLeft: 12,
+    paddingRight: 12,
 };
 
 export const container = {
@@ -10,6 +10,6 @@ export const container = {
 };
 
 export const logo = {
-    width: 340,
+    width: 350,
     height: 240,
 };
