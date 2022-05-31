@@ -33,7 +33,7 @@ const delays = {
                 StationName: station[0].AdvertisedLocationName,
                 Geometry: station[0].Geometry,
                 AdvertisedTimeAtLocation: advertisedTimeStr,
-                Delay: delayInMinutes.toString(),
+                Delay: delayInMinutes,
                 Canceled: delay.Canceled
             };
         })

@@ -27,6 +27,14 @@ export const canceled = {
     textDecorationLine: 'line-through'
 };
 
-export const delay = {
-    color: '#d60e00',
+export const lowDelay = {
+    color: '#f7e64d'
+};
+
+export const midDelay = {
+    color: '#e87b07'
+};
+
+export const highDelay = {
+    color: '#d60e00'
 };

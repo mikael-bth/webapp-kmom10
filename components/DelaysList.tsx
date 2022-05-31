@@ -19,6 +19,14 @@ export default function DelaysList() {
 
     const listOfDStations = delayedStations
         .map((delayedStation, index) => {
+            let delayColor;
+            if (delayedStation.Delay <= 10) {
+                delayColor = Delay.lowDelay;
+            } else if (delayedStation.Delay <= 30) {
+                delayColor = Delay.midDelay;
+            } else {
+                delayColor = Delay.highDelay;
+            }
             return (
             <View key={index} style={Delay.delayContainer}>
                 <Text style={ Delay.header }>
@@ -30,14 +38,14 @@ export default function DelaysList() {
                         <Text style={ Delay.canceled }>
                             { " " + delayedStation.AdvertisedTimeAtLocation + " "}
                         </Text>
-                        <Text style={ Delay.delay }>
+                        <Text style={ Delay.highDelay }>
                             Inställd
                         </Text>
                     </Text> : 
                     <Text style={ Delay.normal }>
                         Ankomst: { delayedStation.AdvertisedTimeAtLocation } +
-                        <Text style={ Delay.delay }>
-                            { " " + delayedStation.Delay }
+                        <Text style={ delayColor}>
+                            { " " + delayedStation.Delay.toString() }
                         </Text>
                     </Text>
                 }
