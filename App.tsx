@@ -3,18 +3,27 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import FlashMessage from 'react-native-flash-message';
+
 import { Base } from './styles';
+
 import Home from './components/Home';
 import Latest from './components/Latest';
 import DelayMap from './components/DelayMap';
+import Auth from './components/auth/Auth';
+import Logout from './components/auth/Logout';
+
+import AuthModel from './models/auth';
 
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
   "Start": "home",
   "Senaste": "list",
-  "Karta": "navigate-circle"
+  "Karta": "navigate-circle",
+  "Logga in": "log-in",
+  "Logga ut": "log-out",
 }
 
 const navTheme = {
@@ -27,6 +36,16 @@ const navTheme = {
 
 export default function App() {
   const [delayedStations, setDelayedStations] = useState([]);
+
+  const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+  
+  useEffect(() => {
+    async function getLoggedIn() {
+      const loggedIn = await AuthModel.loggedIn();
+      setIsLoggedIn(loggedIn);
+    }
+    getLoggedIn();
+  }, []);
 
   return (
     <SafeAreaView style={[Base.container]}>
@@ -50,9 +69,18 @@ export default function App() {
           <Tab.Screen name="Karta">
             {() => <DelayMap delayedStations={delayedStations} setDelayedStations={setDelayedStations} />}
           </Tab.Screen>
+          {isLoggedIn ?
+            <Tab.Screen name="Logga ut">
+            {(screenProps) => <Logout {...screenProps} setIsLoggedIn={setIsLoggedIn} />}
+          </Tab.Screen> :
+            <Tab.Screen name="Logga in">
+              {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+            </Tab.Screen>
+          }
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
+      <FlashMessage position="top" />
     </SafeAreaView>
   );
 }

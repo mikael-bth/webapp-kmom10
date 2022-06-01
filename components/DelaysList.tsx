@@ -40,7 +40,7 @@ export default function DelaysList({delayedStations, setDelayedStations}) {
                     <Text style={ Delay.normal }>
                         Ankomst: { delayedStation.AdvertisedTimeAtLocation } +
                         <Text style={ delayColor}>
-                            { " " + delayedStation.Delay.toString() }
+                            { DelayModel.getInHoursAndMinutes(delayedStation.Delay) }
                         </Text>
                     </Text>
                 }

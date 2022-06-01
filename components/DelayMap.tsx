@@ -18,17 +18,13 @@ export default function DelayMap({delayedStations, setDelayedStations}) {
     });
 
     useEffect(() => {
-        async function setDelays() {
+        (async () => {
             const delayedStations = await DelayModel.getDelayedStation();
             setDelayedStations(delayedStations);
-            console.log("reset");
-        }
-        (async () => {
-
-            await setDelays();
 
             const markerList = [];
             const markedStation = [];
+            
             delayedStations.map((delayedStation, index) => {
                 if (markedStation.indexOf(delayedStation.Geometry.WGS84) != -1) return;
                 markedStation.push(delayedStation.Geometry.WGS84);
@@ -43,7 +39,7 @@ export default function DelayMap({delayedStations, setDelayedStations}) {
                         </Text>;
                     }
                     return <Text key={i} style={Delay.normalMap}>
-                        {"Ankomst " + delay.AdvertisedTimeAtLocation + " + " + delay.Delay.toString()}
+                        {"Ankomst " + delay.AdvertisedTimeAtLocation + " + " + DelayModel.getInHoursAndMinutes(delay.Delay)}
                     </Text>;
                 });
                 markerList.push(
@@ -63,7 +59,7 @@ export default function DelayMap({delayedStations, setDelayedStations}) {
                 return;
             }
 
-            const currentLocation = await Location.getCurrentPositionAsync({});
+            const currentLocation = await Location.getLastKnownPositionAsync({});
 
             setLocationMarker(<Marker
                 coordinate={{

@@ -41,8 +41,11 @@ const delays = {
         return delayedStationList;
     },
 
-    getInHoursAndMinutes: function getInHoursAndMinutes(): string {
-        
+    getInHoursAndMinutes: function getInHoursAndMinutes(totalMinutes: number): string {
+        const hours = Math.floor(totalMinutes / 60);
+        if (hours == 0) return " " + totalMinutes.toString() + "min";
+        const minutes = totalMinutes % 60;
+        return " " + hours.toString() + "h " + minutes.toString() + "min";
     }
 };
 
