@@ -39,6 +39,10 @@ const delays = {
         })
 
         return delayedStationList;
+    },
+
+    getInHoursAndMinutes: function getInHoursAndMinutes(): string {
+        
     }
 };
 

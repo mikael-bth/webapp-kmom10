@@ -38,3 +38,14 @@ export const midDelay = {
 export const highDelay = {
     color: '#d60e00'
 };
+
+export const headerMap = {
+    textAlign: "center",
+    fontSize: 16,
+    marginBottom: 6
+};
+
+export const normalMap = {
+    fontSize: 12,
+    marginBottom: 3,
+};

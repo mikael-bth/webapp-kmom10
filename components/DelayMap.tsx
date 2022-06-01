@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { Base, Typography } from "./../styles"
+import { Base, Typography, Delay } from "./../styles"
 
 import MapView from 'react-native-maps';
-import { Marker } from "react-native-maps";
+import { Marker, Callout } from "react-native-maps";
 import * as Location from 'expo-location';
 
 import DelayModel from './../models/delays';
@@ -21,24 +21,39 @@ export default function DelayMap({delayedStations, setDelayedStations}) {
         async function setDelays() {
             const delayedStations = await DelayModel.getDelayedStation();
             setDelayedStations(delayedStations);
-            
+            console.log("reset");
         }
         (async () => {
 
             await setDelays();
 
             const markerList = [];
+            const markedStation = [];
             delayedStations.map((delayedStation, index) => {
+                if (markedStation.indexOf(delayedStation.Geometry.WGS84) != -1) return;
+                markedStation.push(delayedStation.Geometry.WGS84);
                 const coordinates = delayedStation.Geometry.WGS84.split(" ");
                 const lat = parseFloat(coordinates[2].slice(0, -1));
                 const lon = parseFloat(coordinates[1].slice(1));
-                let delayString = "Ankomst " + delayedStation.AdvertisedTimeAtLocation + " + " + delayedStation.Delay.toString();
-                if (delayedStation.Canceled) {
-                    delayString = "Ankomst " + delayedStation.AdvertisedTimeAtLocation + " - Inställd"
-                }
-                markerList.push(<Marker key={index} coordinate={{ latitude: lat, longitude: lon }}
-                title={delayedStation.StationName} description={delayString}
-                />)
+                const stationDelays = delayedStations.filter(delay => delay.Geometry.WGS84 == delayedStation.Geometry.WGS84);
+                const delays = stationDelays.map((delay, i) => {
+                    if (delay.Canceled) {
+                        return <Text key={i} style={Delay.normalMap}>
+                            {"Ankomst" + delay.AdvertisedTimeAtLocation + " - Inställd"}
+                        </Text>;
+                    }
+                    return <Text key={i} style={Delay.normalMap}>
+                        {"Ankomst " + delay.AdvertisedTimeAtLocation + " + " + delay.Delay.toString()}
+                    </Text>;
+                });
+                markerList.push(
+                <Marker key={index} coordinate={{ latitude: lat, longitude: lon }}> 
+                    <Callout style={{width: 200}}>
+                        <Text style={Delay.headerMap}>{delayedStation.StationName}</Text>
+                        {delays}
+                    </Callout>
+                </Marker>);
+
             });
             setMarkers(markerList);
 
