@@ -1,17 +1,20 @@
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Base } from './styles';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useState } from 'react';
+import { Base } from './styles';
 import Home from './components/Home';
 import Latest from './components/Latest';
+import DelayMap from './components/DelayMap';
 
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
   "Start": "home",
-  "Senaste": "list"
+  "Senaste": "list",
+  "Karta": "navigate-circle"
 }
 
 const navTheme = {
@@ -23,6 +26,8 @@ const navTheme = {
 }
 
 export default function App() {
+  const [delayedStations, setDelayedStations] = useState([]);
+
   return (
     <SafeAreaView style={[Base.container]}>
       <NavigationContainer theme={navTheme}>
@@ -40,7 +45,10 @@ export default function App() {
             {() => <Home/>}
           </Tab.Screen>
           <Tab.Screen name="Senaste">
-            {() => <Latest/>}
+            {() => <Latest delayedStations={delayedStations} setDelayedStations={setDelayedStations} />}
+          </Tab.Screen>
+          <Tab.Screen name="Karta">
+            {() => <DelayMap delayedStations={delayedStations} setDelayedStations={setDelayedStations} />}
           </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>

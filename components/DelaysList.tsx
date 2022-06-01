@@ -3,19 +3,14 @@ import { Text, View } from 'react-native';
 import { Delay } from './../styles';
 import DelayModel from './../models/delays';
 
-export default function DelaysList() {
-
-    const [delayedStations, setDelayedStations] = useState([]);
-
+export default function DelaysList({delayedStations, setDelayedStations}) {
     useEffect(() => {
-        async function reloadDelays() {
+        async function setDelays() {
             const delayedStations = await DelayModel.getDelayedStation();
             setDelayedStations(delayedStations);
         }
-        reloadDelays();
+        setDelays();
     }, []);
-
-    
 
     const listOfDStations = delayedStations
         .map((delayedStation, index) => {

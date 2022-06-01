@@ -1,10 +1,10 @@
 interface Station {
-    AdvertisedLocationName: string,
+    StationName: string,
     Geometry: {
         WGS84: string
     },
     AdvertisedTimeAtLocation: string
-    Delay: string,
+    Delay: number,
     Canceled: boolean
 }
 
