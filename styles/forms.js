@@ -22,3 +22,12 @@ export const buttonText = {
     fontSize: 28,
     textAlign: "center"
 };
+
+export const station = {
+    borderWidth: 2,
+    borderColor: '#000',
+    borderRadius: 15,
+    padding: 10,
+    margin: 15,
+    minWidth: 300
+}

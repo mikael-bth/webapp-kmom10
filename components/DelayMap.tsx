@@ -21,10 +21,10 @@ export default function DelayMap({delayedStations, setDelayedStations}) {
         (async () => {
             const delayedStations = await DelayModel.getDelayedStation();
             setDelayedStations(delayedStations);
-
+            console.log("here");
             const markerList = [];
             const markedStation = [];
-            
+
             delayedStations.map((delayedStation, index) => {
                 if (markedStation.indexOf(delayedStation.Geometry.WGS84) != -1) return;
                 markedStation.push(delayedStation.Geometry.WGS84);
@@ -35,7 +35,7 @@ export default function DelayMap({delayedStations, setDelayedStations}) {
                 const delays = stationDelays.map((delay, i) => {
                     if (delay.Canceled) {
                         return <Text key={i} style={Delay.normalMap}>
-                            {"Ankomst" + delay.AdvertisedTimeAtLocation + " - Inställd"}
+                            {"Ankomst " + delay.AdvertisedTimeAtLocation + " - Inställd"}
                         </Text>;
                     }
                     return <Text key={i} style={Delay.normalMap}>

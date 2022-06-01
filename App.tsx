@@ -13,8 +13,9 @@ import Latest from './components/Latest';
 import DelayMap from './components/DelayMap';
 import Auth from './components/auth/Auth';
 import Logout from './components/auth/Logout';
+import Favorites from './components/user/Favorites';
 
-import AuthModel from './models/auth';
+import AuthModel from './models/user';
 
 
 const Tab = createBottomTabNavigator();
@@ -24,6 +25,7 @@ const routeIcons = {
   "Karta": "navigate-circle",
   "Logga in": "log-in",
   "Logga ut": "log-out",
+  "Favoriter": "heart"
 }
 
 const navTheme = {
@@ -70,11 +72,16 @@ export default function App() {
             {() => <DelayMap delayedStations={delayedStations} setDelayedStations={setDelayedStations} />}
           </Tab.Screen>
           {isLoggedIn ?
-            <Tab.Screen name="Logga ut">
-            {(screenProps) => <Logout {...screenProps} setIsLoggedIn={setIsLoggedIn} />}
-          </Tab.Screen> :
+            <Tab.Screen name="Favoriter">
+              {() => <Favorites  delayedStations={delayedStations} setDelayedStations={setDelayedStations} />}
+            </Tab.Screen> :
             <Tab.Screen name="Logga in">
               {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+            </Tab.Screen>
+          }
+          {isLoggedIn &&
+            <Tab.Screen name="Logga ut">
+              {(screenProps) => <Logout {...screenProps} setIsLoggedIn={setIsLoggedIn} />}
             </Tab.Screen>
           }
         </Tab.Navigator>
