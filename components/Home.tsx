@@ -23,6 +23,13 @@ export default function Home() {
           här under och då kommer du kunna vart det finns förseningar i hela landet och hur
           länge dom tros vara.
         </Text>
+        <Text style={Typography.header2}>Favoriter</Text>
+        <Text style={Typography.normal}>
+          Om du väljer att skapa ett konto hos oss kan du till och med spara ner dina favorit
+          stationer och kan då lätt gå och se vilka aktiva förseningar det finns på dom stationerna.
+          Ifall du trycker på 'Logga in' i menyn så kan du logga in eller skapa ett konto och
+          kan då börja se och skapa favoriter.
+        </Text>
       </ScrollView>
   );
 }
